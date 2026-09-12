@@ -17,7 +17,7 @@
 
   };
 
-  outputs =
+outputs =
     {
       nixpkgs,
       nvf,
@@ -26,22 +26,22 @@
     }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { system = system; };
-      configModule = import ./nvf;
-      customNeovim = nvf.lib.neovimConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit simple-dark; };
-        modules = [ configModule ];
-      };
+      pkgs = import nixpkgs { inherit system; };
+
+      mkNeovim =
+        pkgsSet:
+        (nvf.lib.neovimConfiguration {
+          pkgs = pkgsSet;
+          extraSpecialArgs = { inherit simple-dark; };
+          modules = [ (import ./nvf) ];
+        }).neovim;
     in
     {
-      packages.${system}.my-neovim = customNeovim.neovim;
-      homeManagerModules.default =
-        { ... }:
-        {
-          imports = [ ./nvf ];
-          _module.args.simple-dark = simple-dark;
-        };
+      packages.${system}.default = mkNeovim pkgs;
+
+      overlays.default = final: prev: {
+        my-neovim = mkNeovim final;
+      };
     };
 
 }
