@@ -17,9 +17,9 @@
 
     autopairs.nvim-autopairs.enable = true;
 
-    lsp.presets.rust-analyzer.enable = true;
-
     globals = import ./globals.nix;
+
+    lsp.presets = import ./lsp-presets.nix;
 
     options = import ./options.nix;
 

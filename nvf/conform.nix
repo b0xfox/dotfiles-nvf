@@ -16,4 +16,9 @@
     #    timeout_ms = 1000;
     #};
   };
+
+  presets = {
+    deno.enable = true;
+  };
+
 }
