@@ -15,25 +15,25 @@
       vim.cmd([[set fillchars=eob:\ ,]])
     '';
 
-    autopairs.nvim-autopairs.enable = true;
-
     globals = import ./globals.nix;
 
-    lsp.presets = import ./lsp-presets.nix;
-
     options = import ./options.nix;
+
+    lsp.presets = import ./lsp-presets.nix;
 
     diagnostics = import ./diagnostics.nix { inherit lib; };
 
     keymaps = import ./keymaps.nix;
 
-    autocomplete.blink-cmp = import ./blink-cmp.nix;
+    languages = import ./languages.nix;
 
     mini = import ./mini.nix;
 
     statusline.lualine = import ./lualine.nix;
 
-    languages = import ./languages.nix;
+    autocomplete.blink-cmp = import ./blink-cmp.nix;
+
+    autopairs.nvim-autopairs.enable = true;
 
     formatter.conform-nvim = import ./conform.nix;
 
@@ -45,13 +45,15 @@
 
     utility.motion.flash-nvim = import ./flash.nix;
 
-    assistant.codecompanion-nvim = import ./codecompanion.nix { inherit lib; };
+    #assistant.codecompanion-nvim = import ./codecompanion.nix { inherit lib; };
 
     dashboard.dashboard-nvim = import ./dashboard.nix;
 
-    ui.colorizer = import  ./colorizer.nix;
+    ui.colorizer = import ./colorizer.nix;
 
-    ui.noice = import  ./noice.nix;
+    ui.noice = import ./noice.nix;
+
+    terminal.toggleterm = import ./toggleterm.nix;
 
     extraPlugins = {
 
